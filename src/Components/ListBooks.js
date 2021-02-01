@@ -11,21 +11,20 @@ class MyReads extends Component {
         books.forEach(book => {
             const bookShelf = book.shelf;      
             if(shelfs[bookShelf]) {
-                shelfs[bookShelf].push(book)
+                shelfs[bookShelf].push(book);
             } else {
                 shelfs[bookShelf] = [book]
             }
           })
-          console.log(shelfs)
         
         return (                    
             <div className="bookshelf">             
                 {
                     Object.keys(shelfs).map((shelf,index)=>(
-                        <div key={index} className="bookshelf-books">                        
+                        <div key={ index } className="bookshelf-books">                        
                             <h2 className="bookshelf-title">{shelf}</h2>
                             <ol className="books-grid">
-                                <Book books={shelfs[shelf]} />
+                                <Book shelfs={shelfs} books={ shelfs[shelf] } />
                             </ol>
                         </div>
                     ))
