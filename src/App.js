@@ -3,7 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Route, Link } from 'react-router-dom'
 import Search from './Components/Search'
-import MyReads from './Components/MyReads'
+import ListBooks from './Components/ListBooks'
 
 
 class BooksApp extends React.Component {
@@ -11,6 +11,7 @@ class BooksApp extends React.Component {
     books: []
   }
   componentDidMount() {
+
     BooksAPI.getAll()
       .then((books) => {
         this.setState(() => ({
@@ -18,6 +19,7 @@ class BooksApp extends React.Component {
         }))
     })
   }
+
   render() {
     return (
       <div className="app">
@@ -28,8 +30,7 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                {console.log(this.state.books)}
-                <MyReads books={this.state.books} />
+                <ListBooks books={this.state.books} />
               </div>
             </div>
             <div className="open-search">
