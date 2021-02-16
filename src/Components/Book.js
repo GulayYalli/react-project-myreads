@@ -1,24 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SelectBook from './SelectBook';
-class Book extends Component {
-    state = {  }
-    render() { 
-        const { books, shelfs } = this.props;
+import PropTypes from 'prop-types';
 
-        return ( books.map((book)=>(
-            <li key={ book.id } >
-                <div className="book">
-                    <div className="book-top">
-                        <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>                                            
-                        <SelectBook shelfs={shelfs} bookType={book.shelf} />
-                    </div>
-                    <div className="book-title">{ book.title }</div>
-                    <div className="book-authors">{ book.authors }</div>
-                </div>
-            </li>
-        )) 
-        );
+const Book = props => {
+    const { book } = props;
+    const updateShelf = (movedShelf) => {     
+        book.shelf = movedShelf;
+        props.updateShelfs(book, movedShelf);
     }
+
+    let thumbnail = "";
+    try {
+        thumbnail = book.imageLinks.thumbnail;
+    } catch (error) {
+        // ...
+    }
+    return ( 
+        <li key={ book.id } >
+            <div className="book">
+                <div className="book-top">
+                    <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: `url(${thumbnail})` }}></div>                                            
+                    <SelectBook currentShelf={book.shelf} updateShelf={updateShelf} isSearchPage={props.isSearchPage} />
+                </div>
+                <div className="book-title">{ book.title }</div>
+                { book.authors.map(author=>(
+                    <div key={author} className="book-authors">{author}</div>
+                )) }
+            </div>
+        </li>  
+    );
 }
- 
+
+Book.propTypes = {
+    book: PropTypes.object.isRequired
+}
 export default Book;

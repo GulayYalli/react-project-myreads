@@ -1,37 +1,37 @@
-import React, { Component } from 'react';
-import Book from './Book';
+import React from 'react';
+import Shelf from './Shelf';
+import PropTypes from 'prop-types';
 
+const ListBook = (props) => {
 
-class MyReads extends Component {
-    
-    state = {  }
-    render() {    
-        const { books } = this.props;
-        const shelfs = {};
-        books.forEach(book => {
-            const bookShelf = book.shelf;      
-            if(shelfs[bookShelf]) {
-                shelfs[bookShelf].push(book);
-            } else {
-                shelfs[bookShelf] = [book]
-            }
-          })
-        
-        return (                    
-            <div className="bookshelf">             
-                {
-                    Object.keys(shelfs).map((shelf,index)=>(
-                        <div key={ index } className="bookshelf-books">                        
-                            <h2 className="bookshelf-title">{shelf}</h2>
-                            <ol className="books-grid">
-                                <Book shelfs={shelfs} books={ shelfs[shelf] } />
-                            </ol>
-                        </div>
-                    ))
-                }
-            </div>      
-        );
-    }
+    const { books, updateShelfs } = props;
+    const booksByShelf = {};
+    books.forEach(book => {
+        const bookShelf = book.shelf;      
+        if(booksByShelf[bookShelf]) {
+            booksByShelf[bookShelf].push(book);
+        } else {
+            booksByShelf[bookShelf] = [book]
+        }
+    })
+    return (  
+        <div className="list-books-content">
+            <div>                  
+                <div className="bookshelf">             
+                    { 
+                        Object.keys(booksByShelf).map((shelf,index)=>(                             
+                            <Shelf key={index} booksByShelf={booksByShelf[shelf]} shelf={shelf} updateShelfs={updateShelfs} />
+                        ))                      
+                    }
+                </div>  
+            </div>
+        </div>    
+    );
 }
+
+ListBook.propTypes = {
+    books: PropTypes.array.isRequired,
+    updateShelfs: PropTypes.func.isRequired
+}
+export default ListBook;
  
-export default MyReads;
