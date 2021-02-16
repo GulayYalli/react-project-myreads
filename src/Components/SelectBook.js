@@ -21,7 +21,7 @@ const SelectBook = props => {
 }
 
 SelectBook.propTypes = {
-    currentShelf : PropTypes.string.isRequired,
+    currentShelf : PropTypes.string,
     isSearchPage : PropTypes.bool
 }
 export default SelectBook;
